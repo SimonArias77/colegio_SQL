@@ -1,0 +1,35 @@
+// CONSULTAS
+
+// 1. Ver la lista de estudiantes que ven una asignatura x
+
+db.students.find({ courses_ids: ObjectId("60ad0bedc45a5c4d68d72a91") }) // ID del course
+
+// 2. Ver la lista de profesores que le dictan clase a un estudiante x
+
+var = student = db.students.findOne();  // Obtener el primer estudiante 
+db.teachers.find({ course_ids: { $in: student.courses_ids } })
+
+// 3. Para ordenar los cursos por la cantidad de estudiantes inscritos de manera descendente:
+
+db.courses.aggregate([
+  {
+    $lookup: {
+      from: "students",
+      localField: "_id",
+      foreignField: "courses_ids",
+      as: "students"
+    }
+  },
+  {
+    $project: {
+      name: 1,
+      description: 1,
+      credits: 1,
+      teacher_id: 1,
+      num_students: { $size: "$students" }
+    }
+  },
+  {
+    $sort: { num_students: -1 }
+  }
+])

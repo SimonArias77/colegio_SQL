@@ -1,0 +1,137 @@
+BASE DE DATOS: MUk3EfraXDPdlnBM
+
+mongodb+srv://sariass077:<password>@cluster01.1s7lbqf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster01
+
+mongodb+srv://sariass077:MUk3EfraXDPdlnBM@cluster01.1s7lbqf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster01
+
+db.createCollection("documents_type");
+db.createCollection("roles");
+db.createCollection("students");
+db.createCollection("teachers");
+db.createCollection("employees");
+db.createCollection("courses");
+
+
+// INSERCIÓN DE DATOS
+
+db.documents_type.insertMany([{"name":"Passport","description":"official identification document"},
+{"name":"Driver's License","description":"License to drive vehicles"},
+{"name":"Student ID","description":"Identificacion card for students"}]);
+
+db.roles.insertMany([
+  { name: "Cleaning Staff", permissions: ["Cleaning and maintenance duties"] },
+  { name: "Rector", permissions: ["Administrate the school"] },
+  { name: "Administrator", permissions: ["manage_students", "generate_reports"] }
+])
+
+db.students.insertMany([
+  {
+    name: "Juan",
+    surname: "González",
+    email: "juan.gonzalez@example.com",
+    phone: "+1234567890",
+    courses_ids: [ ObjectId("60ad0bedc45a5c4d68d72a91") ]  
+  },
+  {
+    name: "María",
+    surname: "López",
+    email: "maria.lopez@example.com",
+    phone: "+1987654321",
+    courses_ids: [ ObjectId("60ad0bedc45a5c4d68d72a92"), ObjectId("60ad0bedc45a5c4d68d72a93") ]  
+  },
+  {
+    name: "Carlos",
+    surname: "Martínez",
+    email: "carlos.martinez@example.com",
+    phone: "+1122334455",
+    courses_ids: [ ObjectId("60ad0bedc45a5c4d68d72a93") ]
+  }
+]);
+
+
+db.teachers.insertMany([
+  {
+    name: "Ana",
+    surname: "Martínez",
+    email: "ana.martinez@example.com",
+    phone: "+1122334455",
+    course_ids: [ ObjectId("60ad0bedc45a5c4d68d72a91") ]  
+  },
+  {
+    name: "Pedro",
+    surname: "Gómez",
+    email: "pedro.gomez@example.com",
+    phone: "+1987654321",
+    course_ids: [ ObjectId("60ad0bedc45a5c4d68d72a92"), ObjectId("60ad0bedc45a5c4d68d72a93") ]  
+  },
+  {
+    name: "Laura",
+    surname: "Fernández",
+    email: "laura.fernandez@example.com",
+    phone: "+1122334455",
+    course_ids: [ ObjectId("60ad0bedc45a5c4d68d72a93") ]
+  }
+]);
+
+
+db.employees.insertMany([
+  {
+    name: "Ana",
+    surname: "García",
+    email: "ana.garcia@example.com",
+    phone: "+1234567890",
+    roles: [
+      { _id: ObjectId("667c28017ded0d579d3c6fe3"), name: "Cleaning Staff" }  
+    ]
+  },
+  {
+    name: "Pedro",
+    surname: "Martínez",
+    email: "pedro.martinez@example.com",
+    phone: "+1987654321",
+    roles: [
+      { _id: ObjectId("667c28017ded0d579d3c6fe2"), name: "Rector" }, 
+    ]
+  },
+  {
+    name: "Laura",
+    surname: "Fernández",
+    email: "laura.fernandez@example.com",
+    phone: "+1122334455",
+    roles: [
+      { _id: ObjectId("667c28017ded0d579d3c6fe4"), name: "Administrator" }  
+    ]
+  }
+]);
+
+// Insercion de courses
+
+
+// Definimos los IDs de los cursos previamente creados
+var courseId1 = ObjectId("60ad0bedc45a5c4d68d72a93");  // ID del primer curso
+var courseId2 = ObjectId("60ad0bedc45a5c4d68d72a91");  // ID del segundo curso
+var courseId3 = ObjectId("60ad0bedc45a5c4d68d72a92");  // ID del tercer curso
+
+db.courses.insertMany([
+  {
+    _id: ObjectId("60ad0bedc45a5c4d68d72a93"),
+    name: "Mathematics",
+    description: "An introductory course to Mathematics",
+    credits: 3,
+    teacher_id: ObjectId("60ad0bedc45a5c4d68d72a91")  
+  },
+  {
+    _id: ObjectId("60ad0bedc45a5c4d68d72a91"),
+    name: "Physics",
+    description: "An introductory course to Physics",
+    credits: 4,
+    teacher_id: ObjectId("60ad0bedc45a5c4d68d72a92") 
+  },
+  {
+    _id: ObjectId("60ad0bedc45a5c4d68d72a92"),
+    name: "Chemistry",
+    description: "An introductory course to Chemistry",
+    credits: 3,
+    teacher_id: ObjectId("60ad0bedc45a5c4d68d72a93")
+  }
+]);
